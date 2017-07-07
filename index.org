@@ -1,0 +1,281 @@
+#+Title: Arkham Horror Digitalization
+* Phases
+** Upkeep Phase
+
+ During the upkeep phase, players refresh any exhausted items.
+ Make any upkeep checks.
+ And may rearrange their skills.
+
+** Movement Phase
+** Arkham Encounter Phase
+** Otherworlds Encounter Phase
+** Mythos Phase
+
+* Map of Arkham
+** TODO Uptown
+   :PROPERTIES:
+   :NAME: uptown
+   :BLACK:    southside
+   :WHITE:    university
+   :CONNECTIONS: university,southside,woods,magic_shop,hospital
+   :END:
+
+*** Woods
+   :PROPERTIES:
+   :NAME:     woods
+   :BLACK:    uptown
+   :WHITE:    uptown
+   :CONNECTIONS: uptown
+   :END:
+*** Ye Olde Magick Shoppe
+   :PROPERTIES:
+   :NAME: magic_shop
+   :BLACK:    uptown
+   :WHITE:    uptown
+   :CONNECTIONS: uptown
+   :END:
+*** St Mary's Hospital
+   :PROPERTIES:
+   :NAME: hospital
+   :BLACK:    uptown
+   :WHITE:    uptown
+   :CONNECTIONS: uptown
+   :END:
+** TODO Southside
+   :PROPERTIES:
+   :NAME:     southside
+   :BLACK:    french_hill
+   :WHITE:    uptown
+   :CONNECTIONS: uptown,french_hill,boarding_house,church,historical_society
+   :END:
+*** Ma's Boarding House
+   :PROPERTIES:
+   :NAME:     boarding_house
+   :BLACK:    southside
+   :WHITE:    southside
+   :CONNECTIONS: southside
+   :END:
+*** South Church
+   :PROPERTIES:
+   :NAME: church
+   :BLACK:    southside
+   :WHITE:    southside
+   :CONNECTIONS: southside
+   :END:
+*** Historical Society
+   :PROPERTIES:
+   :NAME: historical_society
+   :BLACK:    southside
+   :WHITE:    southside
+   :CONNECTIONS: southside
+   :END:
+** TODO Miskatonick University
+   :PROPERTIES:
+   :NAME: university
+   :BLACK:    uptown
+   :WHITE:    merchant_district
+   :CONNECTIONS: uptown,merchant_district,french_hills,library,administration,science_building
+   :END:
+*** Library
+   :PROPERTIES:
+   :NAME: library
+   :BLACK:    university
+   :WHITE:    university
+   :CONNECTIONS: university
+   :END:
+*** Science Building
+   :PROPERTIES:
+   :NAME: science_building
+   :BLACK:    university
+   :WHITE:    university
+   :CONNECTIONS: university
+   :END:
+*** Administration
+   :PROPERTIES:
+   :NAME: administration
+   :BLACK:    university
+   :WHITE:    university
+   :CONNECTIONS: university
+   :END:
+** TODO French Hills
+   :PROPERTIES:
+   :NAME: french_hills
+   :BLACK:    southtown
+   :WHITE:    rivertown
+   :END:
+*** The Witch House
+   :PROPERTIES:
+   :NAME: witch_house
+   :BLACK:    french_hills
+   :WHITE:    french_hills
+   :END:
+*** Silver Twilight Lodge
+   :PROPERTIES:
+   :NAME: lodge
+   :BLACK:    french_hills
+   :WHITE:    french_hills
+   :END:
+** TODO Merchant District
+   :PROPERTIES:
+   :NAME: merchant_district
+   :BLACK:    university
+   :WHITE:    northside
+   :END:
+*** Unvisited Isle
+   :PROPERTIES:
+   :NAME: unvisited_isle
+   :BLACK:    merchant_district
+   :WHITE:    merchant_district
+   :END:
+*** River Docks
+   :PROPERTIES:
+   :NAME: docks
+   :BLACK:    merchant_district
+   :WHITE:    merchant_district
+   :END:
+*** The Unnamable
+   :PROPERTIES:
+   :NAME: unnamable
+   :BLACK:    merchant_district
+   :WHITE:    merchant_district
+   :END:
+** TODO Rivertown
+   :PROPERTIES:
+   :NAME: rivertown
+   :BLACK:    easttown
+   :WHITE:    french_hills
+   :END:
+*** Graveyard
+   :PROPERTIES:
+   :NAME: graveyard
+   :BLACK:   rivertown
+   :WHITE:   rivertown
+   :END:
+*** Black Cave
+   :PROPERTIES:
+   :NAME: cave
+   :BLACK:    rivertown
+   :WHITE:    rivertown
+   :END:
+*** General Store
+   :PROPERTIES:
+   :NAME: general_store
+   :BLACK:    rivertown
+   :WHITE:    rivertown
+   :END:
+** TODO Easttown
+   :PROPERTIES:
+   :NAME: easttown
+   :BLACK:    downtown
+   :WHITE:    rivertown
+   :END:
+*** Hibb's Roadhouse
+   :PROPERTIES:
+   :NAME: roadhouse
+   :BLACK:    easttown
+   :WHITE:    easttown
+   :END:
+*** Velma's Diner
+   :PROPERTIES:
+   :NAME: diner
+   :BLACK:    easttown
+   :WHITE:    easttown
+   :END:
+*** Police Station
+   :PROPERTIES:
+   :NAME: police_station
+   :BLACK:    easttown
+   :WHITE:    easttown
+   :END:
+** TODO Northside
+   :PROPERTIES:
+   :NAME: northside
+   :BLACK:    merchant_district
+   :WHITE:    downtown
+   :END:
+*** Newspaper
+   :PROPERTIES:
+   :NAME: newspaper
+   :BLACK:    northside
+   :WHITE:    northside
+   :END:
+*** Curiositie Shoppe
+   :PROPERTIES:
+   :NAME: curiosity_shop
+   :BLACK:    northside
+   :WHITE:    northside
+   :END:
+*** Train Station
+   :PROPERTIES:
+   :NAME: train_station
+   :BLACK:    northside
+   :WHITE:    northside
+   :END:
+** TODO Downtown
+   :PROPERTIES:
+   :NAME: downtown
+   :BLACK:    northside
+   :WHITE:    easttown
+   :END:
+*** Bank of Arkham
+   :PROPERTIES:
+   :NAME: bank
+   :BLACK:    downtown
+   :WHITE:    downtown
+   :END:
+*** Arkham Asylum
+   :PROPERTIES:
+   :NAME: asylum
+   :BLACK:    downtown
+   :WHITE:    downtown
+   :END:
+*** Independence Square
+   :PROPERTIES:
+   :NAME: independence_square
+   :BLACK:    downtown
+   :WHITE:    downtown
+   :END:
+
+* Location Object
+Locations which include streets, places, and other worlds are represented by a location object.
+These should be stored in a dictionary named Arkham, and Other_Worlds.
+There are a number of optional settings and variables.
+These include:
+ + White
+ + Black
+ + Stablity
+ + Is Street 
+Different arguments are needed for different locations but the base class is the same.
+If these are not given when initalizing the object they are ignored.
+
+If no connections are given it defaults to a blank tuple.
+If no players or monsters are given to a location it defaults as a blank list.
+
+#+name: location_object
+#+BEGIN_SRC python
+
+  class Location(object):
+
+      def __init__(self):
+          pass
+
+    
+#+END_SRC
+
+#+name: location_object_tests
+#+BEGIN_SRC python :tangle tests/location.py :noweb yes
+  import unittest
+
+  <<location_object>>
+
+  class LocationTests(unittest.TestCase):
+
+      def test_can_spawn_location(self):
+          test = Location()
+          try:
+              test
+          except:
+              self.fail("Test location failed to be called")
+
+
+#+END_SRC
