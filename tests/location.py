@@ -11,8 +11,8 @@ class Location(object):
 class LocationTests(unittest.TestCase):
 
     def test_can_spawn_location(self):
-        test = Location()
+        test_location = Location()
         try:
-            test
+            test_location
         except:
             self.fail("Test location failed to be called")

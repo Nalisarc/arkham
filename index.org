@@ -261,7 +261,7 @@ If no players or monsters are given to a location it defaults as a blank list.
 
     
 #+END_SRC
-
+** Tests
 #+name: location_object_tests
 #+BEGIN_SRC python :tangle tests/location.py :noweb yes
   import unittest
@@ -271,11 +271,45 @@ If no players or monsters are given to a location it defaults as a blank list.
   class LocationTests(unittest.TestCase):
 
       def test_can_spawn_location(self):
-          test = Location()
+          test_location = Location()
           try:
-              test
+              test_location
           except:
               self.fail("Test location failed to be called")
 
 
 #+END_SRC
+
+#+call: run_test(x="location")
+
+#+RESULTS:
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+
+
+* Tests
+I wrote a test runner that can be invoked in this document.
+To call a specific test simply make a call tag like so:
+#+BEGIN_EXAMPLE
+  ,#+call: run_test(x="test")
+#+END_EXAMPLE
+Please note that you will need to omit the py extension.
+If the tests succeed the result section will be blank, 
+if the test fails you will get a pop up from the bash output.
+
+#+name: run_test
+#+BEGIN_SRC shell :var x='*'  :results verbatim drawer replace output 
+  python -m unittest tests/$x.py 2>&1
+  true
+#+END_SRC
+
+#+RESULTS: run_test
+:RESULTS:
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+:END:
