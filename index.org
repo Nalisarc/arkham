@@ -12,12 +12,71 @@
 ** Mythos Phase
 
 * Map of Arkham
-** TODO Uptown
+:PROPERTIES:
+:COLUMNS:  %ITEM(Location) %NAME(ID) %WHITE(White Connections) %BLACK(Black Connections) %CONNECTIONS(Street Connections)
+:END:
+The map of Arkham is made up of streets, and locations.
+The Location column references the location's "pretty" name. This is what shows up when the game references it in text.
+The ID column is the key for the map, these are what are passed around when players and monsters move, as well as 
+what the engine will look for.
+White Connections Column is where monsters will go if they are to move on a white connection.
+Black Connections Column is where monsters will go if they are to move on a black connection.
+Steet connections are how the streets of arkham connect. They are also assumed to be connected to their white and black connections.
+
+#+begin: columnview :skip-empty-rows true :hlines 2
+#+name: arkham-table
+| Location               | ID                  | White Connections | Black Connections | Street Connections                      |
+|------------------------+---------------------+-------------------+-------------------+-----------------------------------------|
+| Uptown                 | uptown              | university        | southside         | university southside                    |
+| Woods                  | woods               | uptown            | uptown            |                                         |
+| Ye Olde Magick Shoppe  | magic_shop          | uptown            | uptown            |                                         |
+| St Mary's Hospital     | hospital            | uptown            | uptown            |                                         |
+|------------------------+---------------------+-------------------+-------------------+-----------------------------------------|
+| Southside              | southside           | uptown            | french_hill       | uptown french_hill                      |
+| Ma's Boarding House    | boarding_house      | southside         | southside         |                                         |
+| South Church           | church              | southside         | southside         |                                         |
+| Historical Society     | historical_society  | southside         | southside         |                                         |
+|------------------------+---------------------+-------------------+-------------------+-----------------------------------------|
+| Miskatonick University | university          | merchant_district | uptown            | uptown merchant_district french_hills   |
+| Library                | library             | university        | university        |                                         |
+| Science Building       | science_building    | university        | university        |                                         |
+| Administration         | administration      | university        | university        |                                         |
+|------------------------+---------------------+-------------------+-------------------+-----------------------------------------|
+| French Hills           | french_hills        | rivertown         | southtown         | southtown rivertown university          |
+| The Witch House        | witch_house         | french_hills      | french_hills      |                                         |
+| Silver Twilight Lodge  | lodge               | french_hills      | french_hills      |                                         |
+|------------------------+---------------------+-------------------+-------------------+-----------------------------------------|
+| Merchant District      | merchant_district   | northside         | university        | university northside rivertown downtown |
+| Unvisited Isle         | isle                | merchant_district | merchant_district |                                         |
+| River Docks            | docks               | merchant_district | merchant_district |                                         |
+| The Unnamable          | unnamable           | merchant_district | merchant_district |                                         |
+|------------------------+---------------------+-------------------+-------------------+-----------------------------------------|
+| Rivertown              | rivertown           | french_hills      | easttown          | easttown french_hills merchant_district |
+| Graveyard              | graveyard           | rivertown         | rivertown         |                                         |
+| Black Cave             | cave                | rivertown         | rivertown         |                                         |
+| General Store          | general_store       | rivertown         | rivertown         |                                         |
+|------------------------+---------------------+-------------------+-------------------+-----------------------------------------|
+| Easttown               | easttown            | rivertown         | downtown          | downtown rivertown                      |
+| Hibb's Roadhouse       | roadhouse           | easttown          | easttown          |                                         |
+| Velma's Diner          | diner               | easttown          | easttown          |                                         |
+| Police Station         | police_station      | easttown          | easttown          |                                         |
+|------------------------+---------------------+-------------------+-------------------+-----------------------------------------|
+| Northside              | northside           | downtown          | merchant_district | merchant_district downtown              |
+| Newspaper              | newspaper           | northside         | northside         |                                         |
+| Curiositie Shoppe      | curiosity_shop      | northside         | northside         |                                         |
+| Train Station          | train_station       | northside         | northside         |                                         |
+|------------------------+---------------------+-------------------+-------------------+-----------------------------------------|
+| Downtown               | downtown            | easttown          | northside         | northside easttown merchant_district    |
+| Bank of Arkham         | bank                | downtown          | downtown          |                                         |
+| Arkham Asylum          | asylum              | downtown          | downtown          |                                         |
+| Independence Square    | independence_square | downtown          | downtown          |                                         |
+#+end:
+** DONE Uptown
    :PROPERTIES:
    :NAME: uptown
    :BLACK:    southside
    :WHITE:    university
-   :CONNECTIONS: university,southside,woods,magic_shop,hospital
+   :CONNECTIONS: university southside
    :END:
 
 *** Woods
@@ -25,83 +84,75 @@
    :NAME:     woods
    :BLACK:    uptown
    :WHITE:    uptown
-   :CONNECTIONS: uptown
    :END:
 *** Ye Olde Magick Shoppe
    :PROPERTIES:
    :NAME: magic_shop
    :BLACK:    uptown
    :WHITE:    uptown
-   :CONNECTIONS: uptown
    :END:
 *** St Mary's Hospital
    :PROPERTIES:
    :NAME: hospital
    :BLACK:    uptown
    :WHITE:    uptown
-   :CONNECTIONS: uptown
    :END:
-** TODO Southside
+** DONE Southside
    :PROPERTIES:
    :NAME:     southside
    :BLACK:    french_hill
    :WHITE:    uptown
-   :CONNECTIONS: uptown,french_hill,boarding_house,church,historical_society
+   :CONNECTIONS: uptown french_hill
    :END:
 *** Ma's Boarding House
    :PROPERTIES:
    :NAME:     boarding_house
    :BLACK:    southside
    :WHITE:    southside
-   :CONNECTIONS: southside
    :END:
 *** South Church
    :PROPERTIES:
    :NAME: church
    :BLACK:    southside
    :WHITE:    southside
-   :CONNECTIONS: southside
    :END:
 *** Historical Society
    :PROPERTIES:
    :NAME: historical_society
    :BLACK:    southside
    :WHITE:    southside
-   :CONNECTIONS: southside
    :END:
-** TODO Miskatonick University
+** DONE Miskatonick University
    :PROPERTIES:
    :NAME: university
    :BLACK:    uptown
    :WHITE:    merchant_district
-   :CONNECTIONS: uptown,merchant_district,french_hills,library,administration,science_building
+   :CONNECTIONS: uptown merchant_district french_hills
    :END:
 *** Library
    :PROPERTIES:
    :NAME: library
    :BLACK:    university
    :WHITE:    university
-   :CONNECTIONS: university
    :END:
 *** Science Building
    :PROPERTIES:
    :NAME: science_building
    :BLACK:    university
    :WHITE:    university
-   :CONNECTIONS: university
    :END:
 *** Administration
    :PROPERTIES:
    :NAME: administration
    :BLACK:    university
    :WHITE:    university
-   :CONNECTIONS: university
    :END:
-** TODO French Hills
+** DONE French Hills
    :PROPERTIES:
    :NAME: french_hills
    :BLACK:    southtown
    :WHITE:    rivertown
+   :CONNECTIONS: southtown rivertown university
    :END:
 *** The Witch House
    :PROPERTIES:
@@ -115,15 +166,16 @@
    :BLACK:    french_hills
    :WHITE:    french_hills
    :END:
-** TODO Merchant District
+** DONE Merchant District
    :PROPERTIES:
    :NAME: merchant_district
    :BLACK:    university
    :WHITE:    northside
+   :CONNECTIONS: university northside rivertown downtown
    :END:
 *** Unvisited Isle
    :PROPERTIES:
-   :NAME: unvisited_isle
+   :NAME:     isle
    :BLACK:    merchant_district
    :WHITE:    merchant_district
    :END:
@@ -139,11 +191,12 @@
    :BLACK:    merchant_district
    :WHITE:    merchant_district
    :END:
-** TODO Rivertown
+** DONE Rivertown
    :PROPERTIES:
-   :NAME: rivertown
+   :NAME:     rivertown
    :BLACK:    easttown
    :WHITE:    french_hills
+   :CONNECTIONS: easttown french_hills merchant_district
    :END:
 *** Graveyard
    :PROPERTIES:
@@ -163,11 +216,12 @@
    :BLACK:    rivertown
    :WHITE:    rivertown
    :END:
-** TODO Easttown
+** DONE Easttown
    :PROPERTIES:
    :NAME: easttown
    :BLACK:    downtown
    :WHITE:    rivertown
+   :CONNECTIONS: downtown rivertown
    :END:
 *** Hibb's Roadhouse
    :PROPERTIES:
@@ -187,11 +241,12 @@
    :BLACK:    easttown
    :WHITE:    easttown
    :END:
-** TODO Northside
+** DONE Northside
    :PROPERTIES:
    :NAME: northside
    :BLACK:    merchant_district
    :WHITE:    downtown
+   :CONNECTIONS: merchant_district downtown
    :END:
 *** Newspaper
    :PROPERTIES:
@@ -211,11 +266,12 @@
    :BLACK:    northside
    :WHITE:    northside
    :END:
-** TODO Downtown
+** DONE Downtown
    :PROPERTIES:
    :NAME: downtown
    :BLACK:    northside
    :WHITE:    easttown
+   :CONNECTIONS: northside easttown merchant_district
    :END:
 *** Bank of Arkham
    :PROPERTIES:
@@ -256,10 +312,15 @@ If no players or monsters are given to a location it defaults as a blank list.
 
   class Location(object):
 
-      def __init__(self):
-          pass
+      def __init__(self,
+                   name=None,
+                   connections=(),
+      ):
 
-    
+          self.name = name
+          self.connections = connections
+
+
 #+END_SRC
 ** Tests
 #+name: location_object_tests
@@ -278,15 +339,33 @@ If no players or monsters are given to a location it defaults as a blank list.
               self.fail("Test location failed to be called")
 
 
+      def test_can_set_location_attributes(self):
+          """A test to set various attributes of locations"""
+          test_location = Location(name="Test")
+
+          self.assertEqual(test_location.name, "Test")
+
+      def test_locations_have_connections(self):
+          """Test to make sure that locations can be passes a tuple of connections"""
+          test_location = Location(connections=("t1","t2"))
+
+          self.assertEqual(test_location.connections, ("t1","t2"))
+        
+
+
+
 #+END_SRC
 
 #+call: run_test(x="location")
 
 #+RESULTS:
-.
+:RESULTS:
+...
 ----------------------------------------------------------------------
-Ran 1 test in 0.000s
+Ran 3 tests in 0.000s
 
+OK
+:END:
 
 
 * Tests
