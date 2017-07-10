@@ -313,9 +313,9 @@ If no players or monsters are given to a location it defaults as a blank list.
   class Location(object):
 
       def __init__(self,
+                   ,*ignore,
                    name=None,
-                   connections=(),
-      ):
+                   connections=()):
 
           self.name = name
           self.connections = connections
@@ -350,23 +350,23 @@ If no players or monsters are given to a location it defaults as a blank list.
           test_location = Location(connections=("t1","t2"))
 
           self.assertEqual(test_location.connections, ("t1","t2"))
-        
 
+      def test_locations_are_keyword_only(self):
+          test_location = Location('garbage')
 
-
+          self.assertNotEqual(test_location.name, 'garbage')
 #+END_SRC
 
 #+call: run_test(x="location")
 
 #+RESULTS:
 :RESULTS:
-...
+....
 ----------------------------------------------------------------------
-Ran 3 tests in 0.000s
+Ran 4 tests in 0.000s
 
 OK
 :END:
-
 
 * Tests
 I wrote a test runner that can be invoked in this document.

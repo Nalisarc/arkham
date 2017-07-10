@@ -4,9 +4,9 @@ import unittest
 class Location(object):
 
     def __init__(self,
+                 *ignore,
                  name=None,
-                 connections=(),
-    ):
+                 connections=()):
 
         self.name = name
         self.connections = connections
@@ -34,3 +34,8 @@ class LocationTests(unittest.TestCase):
         test_location = Location(connections=("t1","t2"))
 
         self.assertEqual(test_location.connections, ("t1","t2"))
+
+    def test_locations_are_keyword_only(self):
+        test_location = Location('garbage', name="not garbage")
+
+        self.assertNotEqual(test_location.name, 'garbage')
