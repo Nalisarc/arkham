@@ -1,17 +1,129 @@
 #+Title: Arkham Horror Digitalization
-* Phases
-** Upkeep Phase
+* TODO Introduction
+* TODO Phases
+Each turn consists of 5 phases, each player completes each phase at the same time.
+** TODO Upkeep Phase
 
  During the upkeep phase, players refresh any exhausted items.
  Make any upkeep checks.
  And may rearrange their skills.
 
-** Movement Phase
-** Arkham Encounter Phase
-** Otherworlds Encounter Phase
-** Mythos Phase
+** TODO Movement Phase
+At the start of the Movement phase, if the player is in Arkham, they are given a number of movement points equal to their current speed stat.
+A player can then move from one location to another as long as they are connected, and they have enough points.
+A player can stop moving at anytime, but if they would pick up a clue or encounter a monster they must stop moving.
+** TODO Arkham Encounter Phase
+** TODO Otherworlds Encounter Phase
+** TODO Mythos Phase
+* TODO Locations
 
-* Map of Arkham
+** TODO Arkham
+Arkham is where most of the game takes place.
+It is divided up into a number of streets and sublocations.
+
+#+name: arkham-map
+#+BEGIN_SRC python :noweb yes 
+  ARKHAM = {}
+
+#+END_SRC
+
+** TODO Other Worlds
+Other worlds are places that players can get to via portals.
+Each other world is comprised of two sections. Entering through a portal
+will place the player in the first section of the other world.
+During movement an explorer will move to the second section.
+If they are in the second section, they leave the other world via any connected portals.
+If there are no connected portals, the player is lost in time and space and are moved to the void.
+** TODO Misc
+Miscellanious locations are places that players and monsters end up only given special circumstances.
+These include:
+ + The Sky
+ + Outskirts
+ + The Void
+Things that get moved to any of these locations will only move out given special circumstances.
+For example a monster in the sky will move out to attack a player in the street, and then move back to the sky.
+When a player gets lost in time and space they are moved to the void until they can get back.
+Monsters moved to the outskirts will only leave when the outskirts are full.
+** Location Object
+Locations which include streets, places, and other worlds are represented by a location object.
+These should be stored in a dictionary named Arkham, and Other_Worlds.
+There are a number of optional settings and variables.
+These include:
+ + White
+ + Black
+ + Stablity
+ + Is Street 
+Different arguments are needed for different locations but the base class is the same.
+If these are not given when initalizing the object they are ignored.
+
+If no connections are given it defaults to a blank tuple.
+If no players or monsters are given to a location it defaults as a blank list.
+
+#+name: location_object
+#+BEGIN_SRC python
+
+  class Location(object):
+
+      def __init__(self,
+                   ,*ignore,
+                   name=None,
+                   connections=()):
+
+          self.name = name
+          self.connections = connections
+
+
+#+END_SRC
+
+*** Tests
+ #+name: location_object_tests
+ #+BEGIN_SRC python :tangle tests/location.py :noweb yes
+   import unittest
+
+   <<location_object>>
+
+   class LocationTests(unittest.TestCase):
+
+       def test_can_spawn_location(self):
+           test_location = Location()
+           try:
+               test_location
+           except:
+               self.fail("Test location failed to be called")
+
+
+       def test_can_set_location_attributes(self):
+           """A test to set various attributes of locations"""
+           test_location = Location(name="Test")
+
+           self.assertEqual(test_location.name, "Test")
+
+       def test_locations_have_connections(self):
+           """Test to make sure that locations can be passes a tuple of connections"""
+           test_location = Location(connections=("t1","t2"))
+
+           self.assertEqual(test_location.connections, ("t1","t2"))
+
+       def test_locations_are_keyword_only(self):
+           test_location = Location('garbage')
+
+           self.assertNotEqual(test_location.name, 'garbage')
+ #+END_SRC
+
+ #+call: run_test(x="location")
+
+ #+RESULTS:
+ :RESULTS:
+ ....
+ ----------------------------------------------------------------------
+ Ran 4 tests in 0.000s
+
+ OK
+ :END:
+** TODO Arkham Table Reader
+This is a small helper program used to get the information stored in the arkham table and translate it into location objects.
+These are then fed into the game to produce the map.
+* TODO Arkham Locations
 :PROPERTIES:
 :COLUMNS:  %ITEM(Location) %NAME(ID) %WHITE(White Connections) %BLACK(Black Connections) %CONNECTIONS(Street Connections)
 :END:
@@ -71,7 +183,7 @@ Steet connections are how the streets of arkham connect. They are also assumed t
 | Arkham Asylum          | asylum              | downtown          | downtown          |                                         |
 | Independence Square    | independence_square | downtown          | downtown          |                                         |
 #+end:
-** DONE Uptown
+** DONE Uptown                                                     :noexport:
    :PROPERTIES:
    :NAME: uptown
    :BLACK:    southside
@@ -97,7 +209,7 @@ Steet connections are how the streets of arkham connect. They are also assumed t
    :BLACK:    uptown
    :WHITE:    uptown
    :END:
-** DONE Southside
+** DONE Southside                                                  :noexport:
    :PROPERTIES:
    :NAME:     southside
    :BLACK:    french_hill
@@ -122,8 +234,8 @@ Steet connections are how the streets of arkham connect. They are also assumed t
    :BLACK:    southside
    :WHITE:    southside
    :END:
-** DONE Miskatonick University
-   :PROPERTIES:
+** DONE Miskatonick University                                     :noexport:
+0   :PROPERTIES:
    :NAME: university
    :BLACK:    uptown
    :WHITE:    merchant_district
@@ -147,7 +259,7 @@ Steet connections are how the streets of arkham connect. They are also assumed t
    :BLACK:    university
    :WHITE:    university
    :END:
-** DONE French Hills
+** DONE French Hills                                               :noexport:
    :PROPERTIES:
    :NAME: french_hills
    :BLACK:    southtown
@@ -166,7 +278,7 @@ Steet connections are how the streets of arkham connect. They are also assumed t
    :BLACK:    french_hills
    :WHITE:    french_hills
    :END:
-** DONE Merchant District
+** DONE Merchant District                                          :noexport:
    :PROPERTIES:
    :NAME: merchant_district
    :BLACK:    university
@@ -191,7 +303,7 @@ Steet connections are how the streets of arkham connect. They are also assumed t
    :BLACK:    merchant_district
    :WHITE:    merchant_district
    :END:
-** DONE Rivertown
+** DONE Rivertown                                                  :noexport:
    :PROPERTIES:
    :NAME:     rivertown
    :BLACK:    easttown
@@ -216,7 +328,7 @@ Steet connections are how the streets of arkham connect. They are also assumed t
    :BLACK:    rivertown
    :WHITE:    rivertown
    :END:
-** DONE Easttown
+** DONE Easttown                                                   :noexport:
    :PROPERTIES:
    :NAME: easttown
    :BLACK:    downtown
@@ -241,7 +353,7 @@ Steet connections are how the streets of arkham connect. They are also assumed t
    :BLACK:    easttown
    :WHITE:    easttown
    :END:
-** DONE Northside
+** DONE Northside                                                  :noexport:
    :PROPERTIES:
    :NAME: northside
    :BLACK:    merchant_district
@@ -266,7 +378,7 @@ Steet connections are how the streets of arkham connect. They are also assumed t
    :BLACK:    northside
    :WHITE:    northside
    :END:
-** DONE Downtown
+** DONE Downtown                                                   :noexport:
    :PROPERTIES:
    :NAME: downtown
    :BLACK:    northside
@@ -292,82 +404,11 @@ Steet connections are how the streets of arkham connect. They are also assumed t
    :WHITE:    downtown
    :END:
 
-* Location Object
-Locations which include streets, places, and other worlds are represented by a location object.
-These should be stored in a dictionary named Arkham, and Other_Worlds.
-There are a number of optional settings and variables.
-These include:
- + White
- + Black
- + Stablity
- + Is Street 
-Different arguments are needed for different locations but the base class is the same.
-If these are not given when initalizing the object they are ignored.
-
-If no connections are given it defaults to a blank tuple.
-If no players or monsters are given to a location it defaults as a blank list.
-
-#+name: location_object
-#+BEGIN_SRC python
-
-  class Location(object):
-
-      def __init__(self,
-                   ,*ignore,
-                   name=None,
-                   connections=()):
-
-          self.name = name
-          self.connections = connections
-
-
-#+END_SRC
-** Tests
-#+name: location_object_tests
-#+BEGIN_SRC python :tangle tests/location.py :noweb yes
-  import unittest
-
-  <<location_object>>
-
-  class LocationTests(unittest.TestCase):
-
-      def test_can_spawn_location(self):
-          test_location = Location()
-          try:
-              test_location
-          except:
-              self.fail("Test location failed to be called")
-
-
-      def test_can_set_location_attributes(self):
-          """A test to set various attributes of locations"""
-          test_location = Location(name="Test")
-
-          self.assertEqual(test_location.name, "Test")
-
-      def test_locations_have_connections(self):
-          """Test to make sure that locations can be passes a tuple of connections"""
-          test_location = Location(connections=("t1","t2"))
-
-          self.assertEqual(test_location.connections, ("t1","t2"))
-
-      def test_locations_are_keyword_only(self):
-          test_location = Location('garbage')
-
-          self.assertNotEqual(test_location.name, 'garbage')
-#+END_SRC
-
-#+call: run_test(x="location")
-
-#+RESULTS:
-:RESULTS:
-....
-----------------------------------------------------------------------
-Ran 4 tests in 0.000s
-
-OK
-:END:
-
+* TODO Monsters
+* TODO Players
+* TODO The Old One
+* TODO Items
+* TODO Combat
 * Tests
 I wrote a test runner that can be invoked in this document.
 To call a specific test simply make a call tag like so:
@@ -375,8 +416,7 @@ To call a specific test simply make a call tag like so:
   ,#+call: run_test(x="test")
 #+END_EXAMPLE
 Please note that you will need to omit the py extension.
-If the tests succeed the result section will be blank, 
-if the test fails you will get a pop up from the bash output.
+Output is printed as a drawer.
 
 #+name: run_test
 #+BEGIN_SRC shell :var x='*'  :results verbatim drawer replace output 
