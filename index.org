@@ -44,7 +44,7 @@ Things that get moved to any of these locations will only move out given special
 For example a monster in the sky will move out to attack a player in the street, and then move back to the sky.
 When a player gets lost in time and space they are moved to the void until they can get back.
 Monsters moved to the outskirts will only leave when the outskirts are full.
-** Location Object
+** COMMENT Location Object
 Locations which include streets, places, and other worlds are represented by a location object.
 These should be stored in a dictionary named Arkham, and Other_Worlds.
 There are a number of optional settings and variables.
@@ -64,16 +64,17 @@ If no players or monsters are given to a location it defaults as a blank list.
 
   class Location(object):
 
-      def __init__(self,
-                   ,*ignore,
-                   name=None,
-                   connections=()):
+      def __init__(self,*ignore, name="",connections=()):
 
           self.name = name
           self.connections = connections
 
+          return None
+
 
 #+END_SRC
+
+#+RESULTS: location_object
 
 *** Tests
  #+name: location_object_tests
@@ -123,6 +124,24 @@ If no players or monsters are given to a location it defaults as a blank list.
 ** TODO Arkham Table Reader
 This is a small helper program used to get the information stored in the arkham table and translate it into location objects.
 These are then fed into the game to produce the map.
+#+name: arkham-table-reader
+#+begin_src python :var table=arkham-table :noweb yes 
+  <<location_object>>
+
+  ARKHAM = {}
+  for l in table:
+      ARKHAM[l[1]] = Location(
+          name=l[1],
+          connections={"white": l[2], "black": l[3], "street": l[4].split()})
+
+  return ARKHAM
+
+
+#+end_src
+
+#+RESULTS: arkham-table-reader
+
+
 * TODO Arkham Locations
 :PROPERTIES:
 :COLUMNS:  %ITEM(Location) %NAME(ID) %WHITE(White Connections) %BLACK(Black Connections) %CONNECTIONS(Street Connections)
